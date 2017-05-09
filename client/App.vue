@@ -12,8 +12,9 @@
 	
 	$red:red;
 
-	body{
+	body {
 		background-color: $red;
 		box-shadow: 1px 0 0 $red;
 	}
+
 </style>

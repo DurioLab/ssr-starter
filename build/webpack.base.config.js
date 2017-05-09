@@ -2,7 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const vueConfig = require('./vue-loader.config')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -36,7 +37,11 @@ module.exports = {
  		?[
 	        new webpack.optimize.UglifyJsPlugin({
 	          compress: { warnings: false }
-	        })
+	        }),
+	        new ExtractTextPlugin({
+	        	filename:'css/[name].[contenthash].css'
+	        }),
+	        new OptimizeCSSPlugin()
  		]
  		:[
  			new FriendlyErrorsPlugin()

@@ -5,7 +5,6 @@ const path = require('path')
 const base = require('./webpack.base.config')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = merge(base, {
 	entry: {
@@ -21,10 +20,6 @@ module.exports = merge(base, {
 	      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
 	      'process.env.VUE_ENV': '"client"'
 	    }),
-
-        new ExtractTextPlugin({
-          filename: 'common.[chunkhash].css'
-        }),
 	    // extract vendor chunks for better caching
 	    new webpack.optimize.CommonsChunkPlugin({
 	      name: 'vendor',
