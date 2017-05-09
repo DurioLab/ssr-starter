@@ -7,7 +7,7 @@
 
 'use strict';
 
-import {createApp} from '@src/app'
+import { createApp } from '@client/app'
 
 const isDev = process.env.NODE_ENV !== 'production'
 

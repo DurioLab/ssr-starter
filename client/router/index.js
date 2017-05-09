@@ -11,8 +11,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 代码分离 System.import  News.vue  Profile.vue被分离成两个文件
-const NewsPage = () => System.import('@src/pages/News.vue')
-const ProfilePage = () => System.import('@src/pages/Profile.vue')
+const NewsPage = () => System.import('@pages/News.vue')
+const ProfilePage = () => System.import('@pages/Profile.vue')
 
 Vue.use(Router)
 

@@ -1,5 +1,5 @@
 <template>
-	<div>News Content  {{age}}</div>
+	<div>News 没有办法重新运行吧  {{age}}</div>
 </template>
 <script>
 import one from '../components/1.js'

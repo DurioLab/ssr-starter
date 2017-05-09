@@ -1,37 +1,66 @@
 ### Vue2.x + Express4.x + Webpack2.x 服务器渲染脚手架
 
 
-同构应用目录结构
+原始目录
 
----- dist
+	|-- build 自动化构建脚本
+		|--
+		|--
 
-	-- client 客户端
-		|-- 0.xxxx.js
-		|-- 1.xxxx.js
-		|-- index.html
-		|-- app.xxx.js
-		|-- vendor.xxx.js
-		|-- favicon.ico
-		|-- vue-ssr-client-manifest.json
-		|-- service-worker.js
+	|-- client
+		|-- pages
+		|-- components
+		|-- router
+			|-- index.js
+		|-- store
+		|-- app.js
+		|-- App.vue
+		|-- index.template.html
 
-	-- static 资源文件
-		|--0.png
-		|--2.png
-		|--3.png
-
-	-- server 后端
+	|-- server
 		|-- controllers
-			|--
 			|--
 		|-- models
 			|--
-			|--
 		|-- api
 			|--
-			|--
+		|-- entry-server.js
 		|-- server.js
-		|-- vue-ssr-server.bundle.json
+
+	|-- .gitignore
+	|-- .babelrc
+	|-- package.json
+	|-- README.md
+
+
+
+
+最终打包目录结构
+	---- dist
+
+		-- client
+			|-- 0.xxxx.js
+			|-- 1.xxxx.js
+			|-- index.html
+			|-- app.xxx.js
+			|-- vendor.xxx.js
+			|-- favicon.ico
+			|-- vue-ssr-client-manifest.json
+
+		-- server
+			|-- controllers
+				|--
+				|--
+			|-- models
+				|--
+				|--
+			|-- api
+				|--
+				|--
+			|-- server.js
+			
+			|-- vue-ssr-server.bundle.json
+
 
 npm run dev 开发
 npm run build 打包

@@ -10,7 +10,7 @@
 
 <style lang="scss">
 	
-	$red:blue;
+	$red:red;
 
 	body{
 		background-color: $red;

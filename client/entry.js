@@ -8,7 +8,7 @@
 'use strict';
 
 import Vue from 'vue'
-import { createApp } from '@src/app'
+import { createApp } from '@client/app'
 
 
 const { app, router } = createApp()

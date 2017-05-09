@@ -1,24 +1,21 @@
 'use strict'
 
-const express	= require('express')
-const fs 		= require('fs')
-const path 		= require('path')
-const { createBundleRenderer } = require('vue-server-renderer')
-
+import express from 'express'
+import fs from 'fs'
+import path from 'path'
+import favicon from 'serve-favicon'
+import { createBundleRenderer } from 'vue-server-renderer'
 
 const isProd = process.env.NODE_ENV === 'production'
 
 const app = express()
-const template = fs.readFileSync(path.resolve(__dirname, './src/index.template.html'),'utf-8')
+const template = fs.readFileSync(path.resolve(__dirname, '../client/index.template.html'),'utf-8')
 
 function createRenderer (bundle, options) {
-  // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
   return createBundleRenderer(bundle, Object.assign(options, {
     template,
-    // this is only needed when vue-server-renderer is npm-linked
-    basedir: path.resolve(__dirname, './dist'),
-    // recommended for performance
-    runInNewContext: false
+    runInNewContext: false,
+   	// basedir: path.resolve(__dirname, '')
   }))
 }
 
@@ -27,24 +24,30 @@ let readyPromise
 
 
 if (isProd) {
-	// bundle.json及客户端清单文件.json 只为服务端所用
+
 	const bundle = require('./vue-ssr-server-bundle.json')
-	const clientManifest = require('../src/vue-ssr-client-manifest.json')
+	const clientManifest = require('../client/vue-ssr-client-manifest.json')
 	renderer = createRenderer(bundle, {
 		clientManifest
 	})
+
 } else {
-	readyPromise = require('./build/setup-dev-server')(app, (bundle, options) => {
+
+	readyPromise = require('../build/setup-dev-server')(app, (bundle, options) => {
 		renderer = createRenderer(bundle, options)
 	})
+
 }
 
-app.use('/dist', express.static(path.resolve(__dirname, './dist')))
+const serve = (p, cache) => express.static(path.resolve(__dirname,p), {
+  maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0
+})
 
+app.use(favicon(path.resolve(__dirname,'../public/favicon.ico')))
+app.use('/client', serve(isProd ? '../client' : '../dist/client'))
+app.use('/public', serve('../public',true))
 
 function render(req, res){
-
-
 	const handleError = err => {
 	    if (err && err.code === 404) {
 	      res.status(404).end('404 | Page Not Found')
@@ -58,8 +61,9 @@ function render(req, res){
 
 	const context = {
 	    url: req.url,
-	    title: '为啥子不行呢'
+	    title: '服务器渲染脚手架'
 	}
+	
 	renderer.renderToString(context, (err, html)=>{
 		if (err) {
 			return handleError(err)
@@ -67,7 +71,6 @@ function render(req, res){
 		res.end(html)
 	})
 }
-
 
 
 
