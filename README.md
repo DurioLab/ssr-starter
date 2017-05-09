@@ -27,8 +27,9 @@
 		|-- entry-server.js
 		|-- server.js
 
-	|-- .gitignore
-	|-- .babelrc
+	|-- gulp.babel.js // TODO 使用gulp自动化构建
+	|-- .gitignore  
+	|-- .babelrc     // server端babel配置使用, client端babel配置位于webpack配置文件内部
 	|-- package.json
 	|-- README.md
 
