@@ -2,7 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 const vueConfig = require('./vue-loader.config')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -29,12 +28,7 @@ module.exports = {
  		    {
 		        test: /\.js$/,
 		        exclude: /node_modules/,
-		        use: {
-		        	loader: 'babel-loader',
-		        	options: {
-		        		presets:[ ['env', { 'modules': false }] ]
-		        	}
-		        }
+		        loader: 'babel-loader' //配置文件 .babelrc
 	      	}
  		]
  	},
@@ -42,9 +36,6 @@ module.exports = {
  		?[
 	        new webpack.optimize.UglifyJsPlugin({
 	          compress: { warnings: false }
-	        }),
-	        new ExtractTextPlugin({
-	          filename: 'common.[chunkhash].css'
 	        })
  		]
  		:[
