@@ -1,10 +1,7 @@
-/*
-* @Author: Arno Ma
-* @Date:   2017-05-08 16:03:14
-* @Last Modified by:   Arno Ma
-* @Last Modified time: 2017-05-08 16:11:56
-*/
+$color:red;
 
-div{
-	box-shadow: 1px 0 2px white;
+div {
+	color: $color;
+	box-shadow: 1px 0 2px $color;
 }
+

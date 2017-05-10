@@ -5,6 +5,22 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const isProd = process.env.NODE_ENV === 'production'
 
+
+function addOptions(loaders){
+	return loaders.split('!').map(function(loader){
+		var options = {
+			sourceMap: !isProd
+		}
+		if (loader === 'css-loader') {
+			options.importLoaders = 1
+		}
+		return {
+			loader: loader,
+			options: options
+		}
+	})
+}
+
 module.exports = {
 	output: {		
 		publicPath: '/client/'
@@ -23,7 +39,11 @@ module.exports = {
 		        loader: 'vue-loader',
 		        options: {
 		        	preserveWhitespace: false,
-		        	extractCSS: isProd
+		        	extractCSS: isProd,
+		        	loaders: {
+		        		scss: addOptions('vue-style-loader!css-loader!sass-loader') 
+		        	}
+		        	//已经默认添加了postcss-loader
 		        }
 		    },
  		    {
@@ -31,18 +51,17 @@ module.exports = {
 		        exclude: /node_modules/,
 		        loader: 'babel-loader' //配置文件 .babelrc
 	      	},
+
 	      	{
-	      		test: /\.(css|scss)$/,
+	      		test: /\.scss$/,
 	      		exclude: /node_modules/,
-	      		use: !isProd
-	      		? ['vue-style-loader','css-loader','postcss-loader'] 
-	      		: ExtractTextPlugin.extract({
-	      			fallback: 'vue-style-loader',
-		      		use:'css-loader!postcss-loader'
-	      		})
-
+	      		loader: !isProd 
+	      			? addOptions('vue-style-loader!css-loader!postcss-loader!sass-loader')
+	      			: ExtractTextPlugin.extract({
+	      				use: addOptions('css-loader!postcss-loader!sass-loader'),
+	      				fallback:'vue-style-loader'
+	      			})
 	      	}
-
  		]
  	},
  	plugins: isProd
@@ -59,3 +78,7 @@ module.exports = {
  			new FriendlyErrorsPlugin()
  		]
 }
+
+
+
+
