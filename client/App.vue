@@ -9,12 +9,12 @@
 </script>
 
 <style lang="scss">
-	
-	$red:red;
-
+	$red:blue;
 	body {
 		background-color: $red;
 		box-shadow: 1px 0 0 $red;
 	}
-
+	:fullscreen a {
+    	display: flex;
+	}
 </style>

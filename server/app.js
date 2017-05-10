@@ -1,10 +1,15 @@
 'use strict'
 
-import express from 'express'
-import fs from 'fs'
-import path from 'path'
-import favicon from 'serve-favicon'
-import { createBundleRenderer } from 'vue-server-renderer'
+const express = require('express')
+const fs = require('fs')
+const path = require('path')
+const favicon = require('serve-favicon')
+const { createBundleRenderer } = require('vue-server-renderer')
+
+// import fs from 'fs'
+// import path from 'path'
+// import favicon from 'serve-favicon'
+// import { createBundleRenderer } from 'vue-server-renderer'
 
 const isProd = process.env.NODE_ENV === 'production'
 

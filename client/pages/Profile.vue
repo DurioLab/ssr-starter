@@ -11,7 +11,7 @@ export default {
 		})
 	},
 	title(){
-		return 'Helo world'
+		return 'Helo world 文件内容改变啦，哈哈哈'
 	}
 }
 </script>

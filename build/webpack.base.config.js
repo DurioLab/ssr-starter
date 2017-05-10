@@ -1,14 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
-const vueConfig = require('./vue-loader.config')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-	devtool: isProd ? false : '#cheap-module-source-map',
 	output: {		
 		publicPath: '/client/'
  	},
@@ -24,13 +21,28 @@ module.exports = {
 		    {
 		        test: /\.vue$/,
 		        loader: 'vue-loader',
-		        options: vueConfig
+		        options: {
+		        	preserveWhitespace: false,
+		        	extractCSS: isProd
+		        }
 		    },
  		    {
 		        test: /\.js$/,
 		        exclude: /node_modules/,
 		        loader: 'babel-loader' //配置文件 .babelrc
+	      	},
+	      	{
+	      		test: /\.(css|scss)$/,
+	      		exclude: /node_modules/,
+	      		use: !isProd
+	      		? ['vue-style-loader','css-loader','postcss-loader'] 
+	      		: ExtractTextPlugin.extract({
+	      			fallback: 'vue-style-loader',
+		      		use:'css-loader!postcss-loader'
+	      		})
+
 	      	}
+
  		]
  	},
  	plugins: isProd
@@ -39,7 +51,7 @@ module.exports = {
 	          compress: { warnings: false }
 	        }),
 	        new ExtractTextPlugin({
-	        	filename:'css/[name].[contenthash].css'
+	        	filename:'css/[name].[chunkhash].css'
 	        }),
 	        new OptimizeCSSPlugin()
  		]
