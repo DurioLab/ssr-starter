@@ -29,8 +29,13 @@ module.exports = merge(base, {
     }),
     new VueSSRServerPlugin(),
     new CopyWebpackPlugin([
-      {from:path.resolve(__dirname, '../server/app.js'), to:path.resolve(__dirname, '../dist/server/app.js')},
-      {from:path.resolve(__dirname, '../server/index.js'), to:path.resolve(__dirname, '../dist/server/index.js')},
+      {
+        from:{
+          glob: path.resolve(__dirname, '../server/**/*'),
+          ignore: [path.resolve(__dirname, '../server/entry.js')]
+        },
+        to:path.resolve(__dirname, '../dist')
+      },
     ])
   ]
 })

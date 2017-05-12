@@ -7,6 +7,7 @@
 
 'use strict'
 
+require('../node_modules/element-ui/lib/theme-default/index.css')
 require('./index.scss')
 
 import Vue from 'vue'

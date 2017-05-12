@@ -32,7 +32,8 @@
 	|-- .babelrc     // server端babel配置使用, client端babel配置位于webpack配置文件内部
 	|-- package.json
 	|-- README.md
-
+	|-- postcss.config.js  // postcss-loader配置
+	
 
 
 

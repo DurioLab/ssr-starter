@@ -13,6 +13,7 @@ function addOptions(loaders){
 		}
 		if (loader === 'css-loader') {
 			options.importLoaders = 1
+			options.minimize = true
 		}
 		return {
 			loader: loader,
@@ -51,17 +52,42 @@ module.exports = {
 		        exclude: /node_modules/,
 		        loader: 'babel-loader' //配置文件 .babelrc
 	      	},
-
+	      	{
+	      		test: /\.css$/,
+	      		// exclude: /node_modules/, !!! 坑 取消注释试试看
+	      		loader: !isProd 
+	      			? addOptions('vue-style-loader!css-loader')
+	      			: ExtractTextPlugin.extract({
+	      				use: addOptions('css-loader'),
+	      				fallback:'vue-style-loader'
+	      			})
+	      	},
 	      	{
 	      		test: /\.scss$/,
-	      		exclude: /node_modules/,
+	      		// exclude: /node_modules/,
 	      		loader: !isProd 
 	      			? addOptions('vue-style-loader!css-loader!postcss-loader!sass-loader')
 	      			: ExtractTextPlugin.extract({
 	      				use: addOptions('css-loader!postcss-loader!sass-loader'),
 	      				fallback:'vue-style-loader'
 	      			})
-	      	}
+	      	},
+	      	{
+		        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+		        loader: 'url-loader',
+		        query: {
+		          limit: 10000,
+		          name: 'img/[name].[hash:7].[ext]'
+		        }
+		    },
+		    {
+		        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+		        loader: 'url-loader',
+		        query: {
+		          limit: 10000,
+		          name: 'fonts/[name].[hash:7].[ext]'
+		        }
+		    },
  		]
  	},
  	plugins: isProd
